@@ -1,269 +1,261 @@
 import streamlit as st
 
-# 페이지 설정
 st.set_page_config(
-    page_title="자기소개 | My Portfolio",
+    page_title="임준혁 — 자기소개",
     page_icon="👤",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
-# CSS 스타일
 st.markdown("""
 <style>
-    .stApp {
-        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-        color: #f0f0f0;
-    }
-    .hero-section {
-        text-align: center;
-        padding: 60px 20px 40px;
-    }
-    .hero-avatar {
-        width: 140px;
-        height: 140px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 64px;
-        margin: 0 auto 24px;
-        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.5);
-        line-height: 140px;
-    }
-    .hero-name {
-        font-size: 2.8rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #667eea, #a78bfa);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 8px;
-    }
-    .hero-title {
-        font-size: 1.2rem;
-        color: #a78bfa;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-    }
-    .hero-desc {
-        font-size: 1.05rem;
-        color: #c4c4e0;
-        max-width: 600px;
-        margin: 0 auto;
-        line-height: 1.8;
-    }
-    .card {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(102, 126, 234, 0.2);
-        border-radius: 16px;
-        padding: 28px;
-        margin-bottom: 20px;
-        backdrop-filter: blur(10px);
-    }
-    .card-title {
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #a78bfa;
-        margin-bottom: 18px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .skill-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .skill-badge {
-        background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3));
-        border: 1px solid rgba(102, 126, 234, 0.4);
-        border-radius: 20px;
-        padding: 6px 16px;
-        font-size: 0.9rem;
-        color: #d4b8ff;
-        font-weight: 500;
-    }
-    .timeline-item {
-        border-left: 2px solid rgba(102, 126, 234, 0.5);
-        padding-left: 20px;
-        margin-bottom: 20px;
-        position: relative;
-    }
-    .timeline-item::before {
-        content: '';
-        width: 10px;
-        height: 10px;
-        background: #667eea;
-        border-radius: 50%;
-        position: absolute;
-        left: -6px;
-        top: 4px;
-    }
-    .timeline-date {
-        font-size: 0.82rem;
-        color: #a78bfa;
-        font-weight: 600;
-        letter-spacing: 1px;
-    }
-    .timeline-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #f0f0f0;
-        margin: 4px 0 2px;
-    }
-    .timeline-sub {
-        font-size: 0.88rem;
-        color: #9090b0;
-    }
-    .contact-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-        color: #c4c4e0;
-        font-size: 0.95rem;
-    }
-    .contact-icon {
-        font-size: 1.3rem;
-        width: 36px;
-        text-align: center;
-    }
-    .divider {
-        border: none;
-        border-top: 1px solid rgba(102, 126, 234, 0.15);
-        margin: 40px 0;
-    }
-    #MainMenu, footer, header {visibility: hidden;}
-    .block-container {padding-top: 0 !important; max-width: 1000px;}
+    #MainMenu, footer, header { visibility: hidden; }
+    .block-container { padding: 0 !important; max-width: 100% !important; }
+    .stApp { background: #f4f1ec; }
 </style>
 """, unsafe_allow_html=True)
 
-# ─── 히어로 섹션 ───────────────────────────────────────────────
 st.markdown("""
-<div class="hero-section">
-    <div class="hero-avatar">👤</div>
-    <div class="hero-name">임 준 혁</div>
-    <div class="hero-title">Full Stack Developer · AI Enthusiast</div>
-    <div class="hero-desc">
-        안녕하세요! 사용자 경험을 중심으로 생각하는 개발자입니다.<br>
-        새로운 기술을 배우고 문제를 해결하는 것을 즐기며,<br>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f4f1ec;
+  --paper: #ffffff;
+  --ink: #1d1c1a;
+  --muted: #6e6a64;
+  --accent: #b34a2a;
+  --line: #e5dfd4;
+}
+
+.resume-page {
+  max-width: 980px;
+  margin: 40px auto;
+  background: var(--paper);
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08);
+  font-family: 'Pretendard', system-ui, sans-serif;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: #1d1c1a;
+  color: #f4f1ec;
+  padding: 40px 28px;
+}
+.avatar {
+  width: 88px; height: 88px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 38px; font-weight: 700;
+  margin-bottom: 18px;
+}
+.s-name { font-size: 26px; letter-spacing: -.5px; }
+.s-role { color: #c8c1b6; margin-top: 2px; margin-bottom: 22px; font-size: 14px; }
+
+.contact { list-style: none; font-size: 13px; color: #d3ccc1; }
+.contact li { padding: 5px 0; }
+.contact span { display: inline-block; width: 22px; }
+
+.side-title {
+  margin: 26px 0 10px;
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--accent); text-transform: uppercase;
+}
+
+.skills-list { list-style: none; font-size: 13px; }
+.skills-list li { margin-bottom: 8px; color: #ece6da; }
+.bar { display: block; height: 5px; background: #333; border-radius: 3px; margin-top: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; transition: width 1.2s ease; }
+
+.lang-list { list-style: none; font-size: 13px; color: #ece6da; }
+.lang-list li { padding: 4px 0; display: flex; justify-content: space-between; }
+.lang-list em { color: #9d978a; font-style: normal; font-size: 12px; }
+
+.print-btn {
+  margin-top: 30px; width: 100%;
+  padding: 10px 12px; background: var(--accent);
+  color: #fff; border: 0; border-radius: 8px;
+  font-size: 13px; cursor: pointer;
+  transition: filter .2s;
+}
+.print-btn:hover { filter: brightness(1.15); }
+
+/* ── CONTENT ── */
+.content { padding: 44px 40px; background: var(--paper); }
+.block { margin-top: 32px; }
+.block-title {
+  font-size: 18px;
+  border-bottom: 2px solid var(--ink);
+  display: inline-block;
+  padding-bottom: 4px;
+  margin-bottom: 16px;
+}
+.intro-p { color: var(--muted); font-size: 15px; line-height: 1.8; }
+
+/* TIMELINE */
+.timeline { list-style: none; }
+.timeline-row { display: grid; grid-template-columns: 140px 1fr; gap: 16px; margin-bottom: 18px; }
+.t-date { color: var(--accent); font-size: 13px; font-weight: 600; padding-top: 2px; }
+.t-card h3 { font-size: 15px; margin-bottom: 6px; }
+.t-card ul { padding-left: 18px; color: var(--muted); font-size: 14px; }
+.t-card li { margin-bottom: 3px; }
+
+/* PROJECTS */
+.projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.proj { border: 1px solid var(--line); padding: 14px; border-radius: 8px; }
+.proj h3 { font-size: 14px; margin-bottom: 6px; }
+.proj p { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.tag {
+  display: inline-block; font-size: 11px;
+  padding: 2px 8px; background: #f4f1ec; color: var(--accent);
+  border-radius: 999px; margin-right: 4px;
+}
+
+/* EDUCATION */
+.edu-list { list-style: none; }
+.edu-list li { padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 14px; }
+.edu-list em { display: block; color: var(--muted); font-style: normal; font-size: 13px; margin-top: 2px; }
+
+@media (max-width: 760px) {
+  .resume-page { grid-template-columns: 1fr; margin: 0; box-shadow: none; }
+  .timeline-row { grid-template-columns: 1fr; gap: 4px; }
+}
+
+@media print {
+  body { background: #fff; }
+  .resume-page { box-shadow: none; margin: 0; max-width: 100%; }
+  .print-btn { display: none; }
+}
+</style>
+
+<div class="resume-page">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="avatar">준</div>
+    <div class="s-name">임준혁</div>
+    <div class="s-role">Full Stack Developer · AI Enthusiast</div>
+
+    <ul class="contact">
+      <li><span>📧</span> lim.junhyeok@email.com</li>
+      <li><span>📱</span> 010-1234-5678</li>
+      <li><span>📍</span> 서울특별시</li>
+      <li><span>🔗</span> github.com/fool0214</li>
+    </ul>
+
+    <h2 class="side-title">스킬</h2>
+    <ul class="skills-list">
+      <li>Python <span class="bar"><i style="width:95%"></i></span></li>
+      <li>JavaScript <span class="bar"><i style="width:78%"></i></span></li>
+      <li>FastAPI <span class="bar"><i style="width:85%"></i></span></li>
+      <li>Streamlit <span class="bar"><i style="width:90%"></i></span></li>
+      <li>SQL <span class="bar"><i style="width:75%"></i></span></li>
+    </ul>
+
+    <h2 class="side-title">언어</h2>
+    <ul class="lang-list">
+      <li>한국어 <em>모국어</em></li>
+      <li>영어 <em>업무 가능</em></li>
+    </ul>
+
+    <button class="print-btn" onclick="window.print()">📄 PDF로 저장</button>
+  </aside>
+
+  <!-- ── CONTENT ── -->
+  <section class="content">
+
+    <header>
+      <h2 class="block-title">소개</h2>
+      <p class="intro-p">
+        안녕하세요! 사용자 경험을 중심으로 생각하는 개발자입니다.
+        Python, FastAPI, Streamlit을 주력으로 사용하며, 데이터 분석과 AI에 관심이 많습니다.
+        새로운 기술을 배우고 문제를 해결하는 것을 즐기며,
         협업을 통해 더 나은 제품을 만들어가는 과정을 좋아합니다.
-    </div>
+      </p>
+    </header>
+
+    <section class="block">
+      <h2 class="block-title">경력</h2>
+      <ol class="timeline">
+        <li class="timeline-row">
+          <div class="t-date">2023.03 — 현재</div>
+          <div class="t-card">
+            <h3>ABC 테크 · 시니어 개발자</h3>
+            <ul>
+              <li>백엔드 서비스 설계 및 AI 기능 개발</li>
+              <li>FastAPI 기반 RESTful API 설계 및 운영</li>
+              <li>LLM 기반 챗봇 서비스 개발</li>
+            </ul>
+          </div>
+        </li>
+        <li class="timeline-row">
+          <div class="t-date">2021.01 — 2023.02</div>
+          <div class="t-card">
+            <h3>XYZ 스타트업 · 풀스택 개발자</h3>
+            <ul>
+              <li>웹 서비스 전반 개발 및 운영</li>
+              <li>React + FastAPI 기반 SaaS 플랫폼 구축</li>
+            </ul>
+          </div>
+        </li>
+        <li class="timeline-row">
+          <div class="t-date">2019.07 — 2020.12</div>
+          <div class="t-card">
+            <h3>퍼스트 소프트 · 주니어 개발자</h3>
+            <ul>
+              <li>사내 관리 시스템 유지보수 및 기능 추가</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="block">
+      <h2 class="block-title">대표 프로젝트</h2>
+      <div class="projects">
+        <div class="proj">
+          <h3>AI 챗봇 서비스</h3>
+          <p>LangChain + OpenAI API 기반 문서 Q&A 챗봇. 사내 지식베이스 검색 자동화.</p>
+          <span class="tag">AI</span><span class="tag">LangChain</span>
+        </div>
+        <div class="proj">
+          <h3>데이터 대시보드</h3>
+          <p>Streamlit 기반 실시간 데이터 시각화 대시보드. KPI 모니터링 자동화.</p>
+          <span class="tag">Streamlit</span><span class="tag">Pandas</span>
+        </div>
+        <div class="proj">
+          <h3>FastAPI 백엔드</h3>
+          <p>마이크로서비스 아키텍처 기반 RESTful API 설계 및 Docker 배포.</p>
+          <span class="tag">FastAPI</span><span class="tag">Docker</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="block-title">학력</h2>
+      <ul class="edu-list">
+        <li>
+          <strong>한국대학교</strong> 컴퓨터공학과 · 2015–2019
+          <em>전공 학점 4.1 / 4.5 · 졸업 우수상</em>
+        </li>
+      </ul>
+    </section>
+
+  </section>
 </div>
-""", unsafe_allow_html=True)
 
-st.markdown('<hr class="divider">', unsafe_allow_html=True)
-
-# ─── 본문 레이아웃 (2컬럼) ──────────────────────────────────────
-col1, col2 = st.columns([1.1, 1])
-
-with col1:
-    st.markdown("""
-    <div class="card">
-        <div class="card-title">🙋 About Me</div>
-        <p style="color:#c4c4e0; line-height:1.9; margin:0;">
-            • 현재 <strong style="color:#a78bfa;">백엔드 / AI 개발</strong>에 집중하고 있습니다.<br>
-            • Python, FastAPI, Streamlit을 주력으로 사용합니다.<br>
-            • 데이터 분석과 머신러닝에 관심이 많습니다.<br>
-            • 사이드 프로젝트로 다양한 아이디어를 실험합니다.<br>
-            • 커피 한 잔과 함께하는 코딩을 즐깁니다 ☕
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="card">
-        <div class="card-title">⚡ 기술 스택</div>
-        <p style="color:#9090b0; font-size:0.85rem; margin-bottom:12px;">Languages</p>
-        <div class="skill-grid">
-            <span class="skill-badge">Python</span>
-            <span class="skill-badge">JavaScript</span>
-            <span class="skill-badge">TypeScript</span>
-            <span class="skill-badge">SQL</span>
-        </div>
-        <p style="color:#9090b0; font-size:0.85rem; margin:16px 0 12px;">Frameworks & Tools</p>
-        <div class="skill-grid">
-            <span class="skill-badge">Streamlit</span>
-            <span class="skill-badge">FastAPI</span>
-            <span class="skill-badge">React</span>
-            <span class="skill-badge">Docker</span>
-            <span class="skill-badge">Git</span>
-            <span class="skill-badge">AWS</span>
-        </div>
-        <p style="color:#9090b0; font-size:0.85rem; margin:16px 0 12px;">AI / Data</p>
-        <div class="skill-grid">
-            <span class="skill-badge">LangChain</span>
-            <span class="skill-badge">OpenAI API</span>
-            <span class="skill-badge">Pandas</span>
-            <span class="skill-badge">Scikit-learn</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div class="card">
-        <div class="card-title">💼 경력</div>
-        <div class="timeline-item">
-            <div class="timeline-date">2023.03 – 현재</div>
-            <div class="timeline-title">시니어 개발자 · ABC 테크</div>
-            <div class="timeline-sub">백엔드 서비스 설계 및 AI 기능 개발</div>
-        </div>
-        <div class="timeline-item">
-            <div class="timeline-date">2021.01 – 2023.02</div>
-            <div class="timeline-title">풀스택 개발자 · XYZ 스타트업</div>
-            <div class="timeline-sub">웹 서비스 전반 개발 및 운영</div>
-        </div>
-        <div class="timeline-item">
-            <div class="timeline-date">2019.07 – 2020.12</div>
-            <div class="timeline-title">주니어 개발자 · 퍼스트 소프트</div>
-            <div class="timeline-sub">사내 관리 시스템 유지보수 및 기능 추가</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="card">
-        <div class="card-title">🎓 학력</div>
-        <div class="timeline-item">
-            <div class="timeline-date">2015 – 2019</div>
-            <div class="timeline-title">컴퓨터공학 학사 · 한국대학교</div>
-            <div class="timeline-sub">전공 학점 4.1 / 4.5 · 졸업 우수상</div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="card">
-        <div class="card-title">📬 연락처</div>
-        <div class="contact-item">
-            <span class="contact-icon">📧</span>
-            <span>hong.gildong@email.com</span>
-        </div>
-        <div class="contact-item">
-            <span class="contact-icon">🐙</span>
-            <span>github.com/hong-gildong</span>
-        </div>
-        <div class="contact-item">
-            <span class="contact-icon">💼</span>
-            <span>linkedin.com/in/hong-gildong</span>
-        </div>
-        <div class="contact-item" style="border-bottom:none;">
-            <span class="contact-icon">📍</span>
-            <span>서울, 대한민국</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# ─── 푸터 ────────────────────────────────────────────────────────
-st.markdown('<hr class="divider">', unsafe_allow_html=True)
-st.markdown("""
-<div style="text-align:center; padding: 20px 0 40px;">
-    <p style="color:#9090b0; font-size:0.9rem; letter-spacing:1px;">
-        ✨ 이 페이지는 <strong style="color:#a78bfa;">Streamlit</strong>으로 제작되었습니다
-    </p>
-</div>
+<script>
+(function() {
+  var btn = document.querySelector('.print-btn');
+  if (btn) btn.addEventListener('click', function() { window.print(); });
+  document.querySelectorAll('.bar i').forEach(function(el) {
+    var w = el.style.width;
+    el.style.width = '0';
+    requestAnimationFrame(function() { el.style.width = w; });
+  });
+})();
+</script>
 """, unsafe_allow_html=True)
